@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Backend\Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
+use Illuminate\Support\Facades\Password;
+
 
 
 class BkForgotPasswordController extends Controller
@@ -23,11 +25,7 @@ class BkForgotPasswordController extends Controller
         $this->middleware('guest:admin');
     }
 
-    protected function broker()
-    {
-        return Password::broker('admins'); 
-        //set password broker name according to guard which you have set in config/auth.php
-    }
+    
 
     /**
      * Display the form to request a password reset link.
@@ -37,6 +35,22 @@ class BkForgotPasswordController extends Controller
     public function showLinkRequestForm()
     {
         return view('backend.auth.passwords.email');
+    }
+
+    
+
+    /**
+     * Get the broker to be used during password reset.
+     *
+     * @return PasswordBroker
+     */
+    public function broker()
+    {
+        return Password::broker('admins');
+    }
+
+    public function guard(){
+        return Auth::guard('admin');
     }
 
     

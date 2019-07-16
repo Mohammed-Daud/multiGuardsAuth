@@ -11,6 +11,25 @@ use Illuminate\Foundation\Auth\ThrottlesLogins;
 
 class BkLoginController extends Controller
 {
+
+    use ThrottlesLogins;
+
+    public $maxAttempts = 5;
+
+    /**
+     * Number of minutes to lock the login.
+    */
+    public $decayMinutes = 3;
+
+    public function __construct()
+    {
+        $this->middleware('guest:admin')->except('logout');
+    }
+
+    public function username(){
+        return 'email';
+    }
+    
     /**
      * Show the login form.
      * 
@@ -30,6 +49,14 @@ class BkLoginController extends Controller
     public function login(Request $request)
     {
         $this->validator($request);
+
+        //check if the user has too many login attempts.
+        if ($this->hasTooManyLoginAttempts($request)){
+            //Fire the lockout event.
+            $this->fireLockoutEvent($request);
+            //redirect the user back after lockout.
+            return $this->sendLockoutResponse($request);
+        }
     
         if(Auth::guard('admin')->attempt($request->only('email','password'),$request->filled('remember'))){
             //Authentication passed...
@@ -37,6 +64,10 @@ class BkLoginController extends Controller
                 ->intended(route('admin.home'))
                 ->with('status','You are Logged in as Admin!');
         }
+
+        //keep track of login attempts from the user.
+        $this->incrementLoginAttempts($request);
+        
         //Authentication failed...
         return $this->loginFailed();
     }

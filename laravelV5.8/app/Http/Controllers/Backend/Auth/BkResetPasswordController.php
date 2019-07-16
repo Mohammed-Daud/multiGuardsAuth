@@ -12,9 +12,14 @@ class BkResetPasswordController extends Controller
 {
     use ResetsPasswords;
 
+    /**
+     * Get the broker to be used during password reset.
+     *
+     * @return PasswordBroker
+     */
     public function broker()
     {
-        return Password::broker('admins'); 
+        return Password::broker('admins');
     }
 
     protected function guard()

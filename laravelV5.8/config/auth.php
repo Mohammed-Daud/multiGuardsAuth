@@ -106,12 +106,13 @@ return [
     'passwords' => [
         'users' => [
             'provider' => 'users',
+            //'email' => 'auth.emails.password',
             'table' => 'password_resets',
             'expire' => 60,
         ],
         'admins' => [
-            'provider' => 'admins_provider
-            ',
+            'provider' => 'admins_provider',
+            //'email' => 'auth.emails.password',
             'table' => 'password_resets',
             'expire' => 60,
         ],

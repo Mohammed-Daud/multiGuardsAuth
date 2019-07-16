@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Illuminate\Auth\Middleware\Authenticate as Middleware;
+use Route;
 
 class Authenticate extends Middleware
 {
@@ -12,10 +13,15 @@ class Authenticate extends Middleware
      * @param  \Illuminate\Http\Request  $request
      * @return string
      */
+    
     protected function redirectTo($request)
     {
         if (! $request->expectsJson()) {
+            if(Route::is('backend.*')){
+                return route('backend.auth.login');
+            }
             return route('login');
         }
     }
+
 }
