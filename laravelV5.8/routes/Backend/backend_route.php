@@ -1,5 +1,5 @@
 <?php
-Route::prefix('back-end')->name('backend.')->namespace('Backend')->group(function(){
+Route::prefix('back-end')->name('backend.')->middleware('auth:admin')->namespace('Backend')->group(function(){
 
 
 

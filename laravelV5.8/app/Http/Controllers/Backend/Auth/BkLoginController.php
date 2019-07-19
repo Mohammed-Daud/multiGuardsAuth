@@ -61,7 +61,7 @@ class BkLoginController extends Controller
         if(Auth::guard('admin')->attempt($request->only('email','password'),$request->filled('remember'))){
             //Authentication passed...
             return redirect()
-                ->intended(route('admin.home'))
+                ->intended(route('backend.dashboard'))
                 ->with('status','You are Logged in as Admin!');
         }
 
