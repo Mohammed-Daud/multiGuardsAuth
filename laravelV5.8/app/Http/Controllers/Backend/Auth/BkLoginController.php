@@ -8,18 +8,20 @@ use Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
+
 
 class BkLoginController extends Controller
 {
 
-    use ThrottlesLogins;
+    use AuthenticatesUsers, ThrottlesLogins;
 
-    public $maxAttempts = 5;
+    public $maxAttempts = 3;
 
     /**
      * Number of minutes to lock the login.
     */
-    public $decayMinutes = 3;
+    public $decayMinutes = 2;
 
     public function __construct()
     {
@@ -77,12 +79,19 @@ class BkLoginController extends Controller
      * 
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function logout()
+    // public function logout()
+    // {
+    //     Auth::guard('admin')->logout();
+    //     return redirect()
+    //         ->route('admin.login')
+    //         ->with('status','Admin has been logged out!');
+    // }
+
+    protected function loggedOut(Request $request)
     {
-        Auth::guard('admin')->logout();
         return redirect()
-            ->route('admin.login')
-            ->with('status','Admin has been logged out!');
+             ->route('backend.auth.login')
+             ->with('status','Admin has been logged out!');
     }
 
     /**
@@ -118,5 +127,9 @@ class BkLoginController extends Controller
         ->back()
         ->withInput()
         ->with('error','Login failed, please try again!');
+    }
+
+    protected function guard(){
+        return Auth::guard('admin');
     }
 }
