@@ -15,3 +15,7 @@ mix.js('resources/js/app.js', 'public/js')
     .js('resources/js/backend_app.js', 'public/backend/js')
     .sass('resources/sass/app.scss', 'public/css')
     .sass('resources/sass/backend_app.scss', 'public/backend/css');
+
+
+
+    

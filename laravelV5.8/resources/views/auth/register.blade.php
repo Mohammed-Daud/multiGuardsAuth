@@ -1,77 +1,97 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Register') }}</div>
 
-                <div class="card-body">
-                    <form method="POST" action="{{ route('register') }}">
+<div class="jumbotron">
+    <h2>Register</h2>
+</div>
+<div class="contact-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <div id="sendmessage">Your message has been sent. Thank you!</div>
+                <div id="errormessage"></div>
+                <form method="POST" action="{{ route('register') }}">
                         @csrf
 
-                        <div class="form-group row">
-                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
+                    <div class="form-group @error('name') has-error @enderror">
 
-                            <div class="col-md-6">
-                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
+                        <label for="name">Name</label>
 
-                                @error('name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
+                        <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}"  autocomplete="name" autofocus>
 
-                        <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
+                        @error('name')
+                            <span class="text-danger">
+                                {{ $message }}
+                            </span>
+                        @enderror
 
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
+                        
 
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
 
-                        <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
 
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+                    </div>
 
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
+                    <div class="form-group @error('email') has-error @enderror">
 
-                        <div class="form-group row">
-                            <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
+                        <label for="email">E-Mail Address</label>
 
-                            <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
-                            </div>
-                        </div>
+                        <input id="email" type="text" class="form-control" name="email" value="{{ old('email') }}" >
 
-                        <div class="form-group row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Register') }}
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+                        @error('email')
+                            <span class="text-danger">
+                                {{ $message }}</strong>
+                            </span>
+                        @enderror
+
+                        
+
+
+
+                    </div>
+
+                    <div class="form-group @error('password') has-error @enderror">
+
+                        <label for="password">Password</label>
+
+                        <input id="password" type="text" class="form-control" name="password" value="{{ old('password') }}" >
+
+                        @error('password')
+                            <span class="text-danger">
+                                {{ $message }}</strong>
+                            </span>
+                        @enderror
+
+                    </div>
+
+                    <div class="form-group @error('password_confirmation') has-error @enderror">
+
+                        <label for="password-confirm">Confirm Password</label>
+
+                        <input id="password-confirm" type="text" class="form-control" name="password_confirmation" value="{{ old('password_confirmation') }}" >
+
+                        @error('password_confirmation')
+                            <span class="text-danger">
+                                {{ $message }}</strong>
+                            </span>
+                        @enderror
+
+                        
+
+
+
+                    </div>
+                    
+
+                    <div class="text-center">
+                        <button type="submit" class="btn">Send Message</button>
+                    </div>
+
+                    
+                </form>
             </div>
         </div>
     </div>
 </div>
+
 @endsection
